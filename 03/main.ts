@@ -1,3 +1,5 @@
+const text = new TextDecoder().decode(Deno.readFileSync("./input.txt"));
+
 const getCharNumber = (char: string) => {
   if (char.charCodeAt(0) > 96) {
     return char.charCodeAt(0) - 96;
@@ -26,8 +28,7 @@ export const partOne = (text: string) => {
   return rucsacs.reduce((sum, rucsac) => sum + prioritize(rucsac), 0);
 };
 
-const text1 = new TextDecoder().decode(Deno.readFileSync("./input.txt"));
-console.log(partOne(text1));
+console.log(partOne(text));
 
 /** Part two */
 
@@ -58,5 +59,4 @@ export const partTwo = (text: string) => {
   return groups.reduce((sum, group) => sum + prioritize2(group), 0);
 };
 
-const text2 = new TextDecoder().decode(Deno.readFileSync("./input2.txt"));
-console.log(partTwo(text2));
+console.log(partTwo(text));
