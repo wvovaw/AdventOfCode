@@ -1,4 +1,9 @@
-<h1 align=center>⭐</h1>
-<h1 align=center>⭐⭐</h1>
-<h1 align=center>⭐⭐</h1>
-<h1 align=center>⭐⭐</h1>
+# Advent of Code 2022
+
+| Day | Part 1 | Part 2 |
+| --: | :----: | :----: |
+|   1 |   ⭐   |   -    |
+|   2 |   ⭐   |   ⭐   |
+|   3 |   ⭐   |   ⭐   |
+|   4 |   ⭐   |   ⭐   |
+|   5 |   ⭐   |   ⭐   |
