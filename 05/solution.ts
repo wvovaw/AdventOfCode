@@ -1,20 +1,53 @@
 import Stack from "./lib/Stack.ts";
 
-export function partOne(crates: string[][], rearranges: number[][]): string {
+type MovesInstruction = [number, number, number];
+type CratesStacks = string[][];
+
+const getInstructionTokens = ([n, from, to]: MovesInstruction) => ({
+  n: n,
+  from: from - 1,
+  to: to - 1,
+});
+
+function getTops<T>(stacks: Stack<T>[]): string {
+  const tops = stacks.map((stack) => stack.peek()).join("");
+  return tops;
+}
+
+export function partOne(
+  crates: CratesStacks,
+  rearranges: MovesInstruction[]
+): string {
   const stacks = crates.map((st) => new Stack(st));
 
-  rearranges.forEach((operation) => {
-    const repeats = operation[0];
-    const from = operation[1] - 1;
-    const to = operation[2] - 1;
+  rearranges.forEach((op) => {
+    const { n, from, to } = getInstructionTokens(op);
 
-    [...Array(repeats)].forEach(() => {
+    [...Array(n)].forEach(() => {
       const crate = stacks[from].pop();
       crate && stacks[to].push(crate);
     });
   });
 
-  const tops = stacks.map((stack) => stack.peek()).join("");
+  return getTops(stacks);
+}
 
-  return tops;
+export function partTwo(
+  crates: CratesStacks,
+  rearranges: MovesInstruction[]
+): string {
+  const stacks = crates.map((st) => new Stack(st));
+
+  rearranges.forEach((op) => {
+    const { n, from, to } = getInstructionTokens(op);
+
+    const buf: string[] = [...Array(n)]
+      .map(() => stacks[from].pop())
+      .filter((el): el is string => el !== "null")
+      .reverse();
+
+    stacks[to].push(buf);
+  });
+
+  return getTops(stacks);
 }
