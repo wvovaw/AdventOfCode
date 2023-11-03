@@ -25,14 +25,23 @@ function recursiveCalculateSize(dir: Dir): number {
     .reduce((acc, cur) => acc + cur, 0);
 }
 
-function findDirsLessThan100kSum(dir: Dir): number {
+function recursiveFindDirsLessThan100kSum(dir: Dir): number {
   if (dir.children.length === 0) {
     if (dir.size <= 100000) return dir.size;
     else return 0;
   }
-  const sizes = dir.children.map((d) => findDirsLessThan100kSum(d));
+  const sizes = dir.children.map((d) => recursiveFindDirsLessThan100kSum(d));
   if (dir.size <= 100000) sizes.push(dir.size);
   return sizes.reduce((acc, cur) => acc + cur, 0);
+}
+
+function recursiveFindCandidateToDelete(dir: Dir, need: number) :number {
+  if (dir.children.length === 0) {
+    if (dir.size >= need) return dir.size;
+  }
+  const sizes = dir.children.map((d) => recursiveFindCandidateToDelete(d, need));
+  if (dir.size >= need) sizes.push(dir.size);
+  return Math.min(...sizes);
 }
 
 function parseLine(line: string) {
@@ -46,9 +55,8 @@ function parseLine(line: string) {
     return "ls";
   }
 }
-
-export function partOne(text: string) {
-  const hst = text.split("\n");
+function buildFilesTree(hstText: string) : Dir {
+  const hst = hstText.split("\n");
   const root: Dir = new Dir(null, "/");
   let cwd: Dir = root;
 
@@ -81,15 +89,24 @@ export function partOne(text: string) {
         break;
       }
       case "ls": {
-        console.log(`cwd: '${cwd.name}'`);
         break;
       }
-      default:
-        throw new Error("Unknown command");
     }
   }
   const a = recursiveCalculateSize(root);
   root.size += a;
-  const res = findDirsLessThan100kSum(root);
-  console.log(res);
+  return root;
+}
+
+export function partOne(text: string) {
+  const root = buildFilesTree(text);
+  const res = recursiveFindDirsLessThan100kSum(root);
+  return res;
+}
+export function partTwo(text: string) {
+  const root = buildFilesTree(text);
+  const freeSpace = 70000000 - root.size;
+  const notEnough = 30000000 - freeSpace;
+  const optimalToDelete = recursiveFindCandidateToDelete(root, notEnough);
+  return optimalToDelete;
 }
