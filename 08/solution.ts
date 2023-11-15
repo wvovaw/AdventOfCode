@@ -1,7 +1,7 @@
 type Coord = { x: number; y: number };
 type Intersection = [{ v: number[]; c: number }, { v: number[]; c: number }];
 
-class Matrix {
+export class Matrix {
   private _buffer: Array<Array<number>>;
 
   public get bufer() {
@@ -31,13 +31,13 @@ class Matrix {
   }
 }
 
-function isCenterVisible(intersection: Intersection) {
+function isCenterVisible(intersection: Intersection): boolean {
   /** tree is visible if:
    * - if every number on the (left / right ) is less than it
    */
-  for (const el of intersection) {
-    const vec = el.v;
-    const centerIx = el.c;
+  for (const int of intersection) {
+    const vec = int.v;
+    const centerIx = int.c;
 
     let localMaxC = 0;
     for (let i = 0; i <= centerIx; ++i) {
@@ -72,8 +72,47 @@ function countVisible(trees: Matrix) {
   return counter;
 }
 
-export function partOne(text: string) {
-  const tm = new Matrix(text);
+export function countScenicScore(intersection: Intersection): number {
+  const scenics = [];
 
+  for (const int of intersection) {
+    const left = int.v.slice(0, int.c).reverse();
+    const n = int.v[int.c];
+    const right = int.v.slice(int.c + 1);
+
+    for (const dir of [left, right]) {
+      let counter = 0;
+      for (let i = 0; i < dir.length; ++i) {
+        if (dir[i] >= n) {
+          counter++;
+          break;
+        }
+        else counter++;
+      }
+      scenics.push(counter);
+    }
+  }
+  return scenics.reduce((acc, cur) => acc * cur, 1);
+}
+
+
+function findMaxScenicScore(trees: Matrix): number {
+  const scenicScores = [];
+  for (let i = 0; i < trees.bufer.length; ++i) {
+    for (let j = 0; j < trees.bufer.length; ++j) {
+      const int = trees.getIntersection({ x: i, y: j });
+      scenicScores.push(countScenicScore(int));
+    }
+  }
+  return Math.max(...scenicScores);
+}
+
+export function partOne(text: string): number {
+  const tm = new Matrix(text);
   return countVisible(tm);
+}
+
+export function partTwo(text: string): number {
+  const tm = new Matrix(text);
+  return findMaxScenicScore(tm);
 }
