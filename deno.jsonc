@@ -1,9 +1,0 @@
-{
-  "tasks": {
-    "test": "deno test --allow-read",
-    "run": "deno run --allow-read"
-  },
-  "imports": {
-    "assert": "https://deno.land/std@0.204.0/assert/mod.ts"
-  }
-}
