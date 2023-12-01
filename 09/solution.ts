@@ -32,8 +32,7 @@ export function partOne(text: string): number {
         if (hx !== tx && hy !== ty) {
           tx = hx - dx;
           ty = hy - dy;
-        }
-        else {
+        } else {
           if (hx === tx) {
             ty += dy;
           } else {
@@ -54,5 +53,49 @@ export function partOne(text: string): number {
 }
 
 export function partTwo(text: string): number {
-  return 0;
+  /**
+   * 1. Change head coordinates according to move instruction
+   * 2. Check if current head coordinate is adjacent with the tail coordinate
+   * 3. If they're not adjacent - move tail according to head movement
+   * 4. Remember the new one tail coordinate in Set
+   */
+  const operations = text.split("\n");
+  const D = {
+    "U": [0, 1],
+    "D": [0, -1],
+    "R": [1, 0],
+    "L": [-1, 0],
+  };
+  let hx = 0, hy = 0;
+  let tx = 0, ty = 0;
+  const knots = Array(10).fill([0, 0]);
+  const visited = new Set<string>([String(knots.at(-1))]);
+
+  const move = (dx: number, dy: number) => {
+      knots[0][0] += dx;
+      knots[0][1] += dy;
+
+      for (let i = 1; i < knots.length; i++) {
+        [hx, hy] = knots[i - 1];
+        [tx, ty] = knots[i];
+        if (!isAdjacent(hx, hy, tx, ty)) {
+          tx += hx === tx ? 0 : (hx - tx) / Math.abs(hx- tx);
+          ty += hy === ty ? 0 : (hy - ty) / Math.abs(hy- ty);
+        }
+        knots[i] = [tx, ty];
+    }
+  };
+
+  for (const op of operations) {
+    const [dir, steps] = op.split(" ");
+    // @ts-ignore
+    const [dx, dy] = D[dir[0]];
+
+    for (const _ of Array(Number(steps)).keys()) {
+      move(dx, dy);
+      visited.add(String(knots.at(-1)));
+    }
+  }
+  console.log(visited);
+  return visited.size;
 }

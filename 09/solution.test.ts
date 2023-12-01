@@ -2,7 +2,7 @@ import { assertEquals } from "assert";
 import { isAdjacent, partOne, partTwo } from "./solution.ts";
 
 Deno.test("Puzzle 9", async (t) => {
-  const txt = `R 4
+  const txt1 = `R 4
 U 4
 L 3
 D 1
@@ -37,6 +37,19 @@ R 2`;
       });
     });
 
-    assertEquals(partOne(txt), 13);
+    assertEquals(partOne(txt1), 13);
+  });
+
+  const txt2 = `R 5
+U 8
+L 8
+D 3
+R 17
+D 10
+L 25
+U 20`;
+
+  await t.step("Part two", async (t) => {
+    assertEquals(partTwo(txt2), 36);
   });
 });
