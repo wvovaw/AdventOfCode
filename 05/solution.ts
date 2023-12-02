@@ -16,7 +16,7 @@ function getTops<T>(stacks: Stack<T>[]): string {
 
 export function partOne(
   crates: CratesStacks,
-  rearranges: MovesInstruction[]
+  rearranges: MovesInstruction[],
 ): string {
   const stacks = crates.map((st) => new Stack(st));
 
@@ -34,7 +34,7 @@ export function partOne(
 
 export function partTwo(
   crates: CratesStacks,
-  rearranges: MovesInstruction[]
+  rearranges: MovesInstruction[],
 ): string {
   const stacks = crates.map((st) => new Stack(st));
 

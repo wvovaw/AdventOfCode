@@ -33,14 +33,16 @@ export function partTwo(text: string): number {
       if (
         (fst[0] <= snd[0] && snd[0] <= fst[1]) ||
         (fst[0] <= snd[1] && snd[1] <= fst[1])
-      )
+      ) {
         counter += 1;
+      }
     } else {
       if (
         (snd[0] <= fst[0] && fst[0] <= snd[1]) ||
         (snd[0] <= fst[1] && fst[1] <= snd[1])
-      )
+      ) {
         counter += 1;
+      }
     }
   });
   return counter;

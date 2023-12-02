@@ -35,7 +35,7 @@ function recursiveFindDirsLessThan100kSum(dir: Dir): number {
   return sizes.reduce((acc, cur) => acc + cur, 0);
 }
 
-function recursiveFindCandidateToDelete(dir: Dir, need: number) :number {
+function recursiveFindCandidateToDelete(dir: Dir, need: number): number {
   if (dir.children.length === 0) {
     if (dir.size >= need) return dir.size;
   }
@@ -55,7 +55,7 @@ function parseLine(line: string) {
     return "ls";
   }
 }
-function buildFilesTree(hstText: string) : Dir {
+function buildFilesTree(hstText: string): Dir {
   const hst = hstText.split("\n");
   const root: Dir = new Dir(null, "/");
   let cwd: Dir = root;
@@ -79,8 +79,9 @@ function buildFilesTree(hstText: string) : Dir {
         if (cwd.children.findIndex((d) => d.name === dirName) === -1) {
           const newDir = new Dir(cwd, dirName);
           cwd.children.push(newDir);
-        } else
+        } else {
           throw new Error(`Dir '${dirName}' already exists in '${cwd.name}'`);
+        }
         break;
       }
       case "file": {

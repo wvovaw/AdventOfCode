@@ -11,8 +11,9 @@ export class Matrix {
   public getIntersection(c: Coord): Intersection {
     const horizontal = this._buffer[c.x];
     const vertical = [];
-    for (let i = 0; i < this._buffer.length; ++i)
+    for (let i = 0; i < this._buffer.length; ++i) {
       vertical.push(this._buffer[i][c.y]);
+    }
 
     return [
       { v: horizontal, c: c.y },
@@ -24,9 +25,7 @@ export class Matrix {
     this._buffer = [];
     if (text) {
       const lines = text.split("\n");
-      lines.forEach((line) =>
-        this._buffer.push(line.split("").map((ch) => Number(ch)))
-      );
+      lines.forEach((line) => this._buffer.push(line.split("").map((ch) => Number(ch))));
     }
   }
 }
@@ -86,15 +85,13 @@ export function countScenicScore(intersection: Intersection): number {
         if (dir[i] >= n) {
           counter++;
           break;
-        }
-        else counter++;
+        } else counter++;
       }
       scenics.push(counter);
     }
   }
   return scenics.reduce((acc, cur) => acc * cur, 1);
 }
-
 
 function findMaxScenicScore(trees: Matrix): number {
   const scenicScores = [];

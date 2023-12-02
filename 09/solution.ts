@@ -72,17 +72,17 @@ export function partTwo(text: string): number {
   const visited = new Set<string>([String(knots.at(-1))]);
 
   const move = (dx: number, dy: number) => {
-      knots[0][0] += dx;
-      knots[0][1] += dy;
+    knots[0][0] += dx;
+    knots[0][1] += dy;
 
-      for (let i = 1; i < knots.length; i++) {
-        [hx, hy] = knots[i - 1];
-        [tx, ty] = knots[i];
-        if (!isAdjacent(hx, hy, tx, ty)) {
-          tx += hx === tx ? 0 : (hx - tx) / Math.abs(hx- tx);
-          ty += hy === ty ? 0 : (hy - ty) / Math.abs(hy- ty);
-        }
-        knots[i] = [tx, ty];
+    for (let i = 1; i < knots.length; i++) {
+      [hx, hy] = knots[i - 1];
+      [tx, ty] = knots[i];
+      if (!isAdjacent(hx, hy, tx, ty)) {
+        tx += hx === tx ? 0 : (hx - tx) / Math.abs(hx - tx);
+        ty += hy === ty ? 0 : (hy - ty) / Math.abs(hy - ty);
+      }
+      knots[i] = [tx, ty];
     }
   };
 

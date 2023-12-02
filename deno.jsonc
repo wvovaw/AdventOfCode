@@ -5,5 +5,13 @@
   },
   "imports": {
     "assert": "https://deno.land/std@0.204.0/assert/mod.ts"
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 90,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": false,
+    "proseWrap": "preserve"
   }
 }
