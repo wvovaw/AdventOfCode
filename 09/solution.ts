@@ -96,6 +96,5 @@ export function partTwo(text: string): number {
       visited.add(String(knots.at(-1)));
     }
   }
-  console.log(visited);
   return visited.size;
 }

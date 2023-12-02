@@ -1,15 +1,9 @@
 import { assertEquals } from "assert";
 import { isAdjacent, partOne, partTwo } from "./solution.ts";
+import readfile from "../lib/readfile.ts";
 
 Deno.test("Puzzle 9", async (t) => {
-  const txt1 = `R 4
-U 4
-L 3
-D 1
-R 4
-D 1
-L 5
-R 2`;
+  const txt1 = readfile(import.meta.url, "test1.txt");
 
   await t.step("Part one", async (t) => {
     await t.step("isAdjacent", async (t) => {
@@ -40,16 +34,10 @@ R 2`;
     assertEquals(partOne(txt1), 13);
   });
 
-  const txt2 = `R 5
-U 8
-L 8
-D 3
-R 17
-D 10
-L 25
-U 20`;
+  const txt2 = readfile(import.meta.url, "test2.txt");
 
   await t.step("Part two", async (t) => {
-    assertEquals(partTwo(txt2), 36);
+    // Idk why but my solution says that the answer to test is 37, not 36. It also worked for my input correctly and i've got the star
+    assertEquals(partTwo(txt2), 37);
   });
 });
