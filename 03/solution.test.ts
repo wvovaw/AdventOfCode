@@ -9,6 +9,6 @@ Deno.test("Puzzle 0", async (t) => {
     assertEquals(partOne(txt), 4361);
   });
   await t.step("Part two", async (t) => {
-    assertEquals(partTwo(txt), 0);
+    assertEquals(partTwo(txt), 467835);
   });
 });
