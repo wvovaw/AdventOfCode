@@ -3,9 +3,9 @@ type Coord = {
   y: number;
 };
 type Num = {
-  n: number,
-  coords: Coord[]
-}
+  n: number;
+  coords: Coord[];
+};
 
 function isDigit(char: string) {
   return !Number.isNaN(Number(char));
@@ -22,20 +22,19 @@ function isAdjacent(c1: Coord, c2: Coord) {
 export function partOne(text: string): number {
   const m = text.split("\n").map((r) => r.split(""));
 
-  const nums : Num[] = [];
-  const symbs : Coord[] = [];
+  const nums: Num[] = [];
+  const symbs: Coord[] = [];
 
   for (let i = 0; i < m.length; ++i) {
     let n = "";
-    let nc : Coord[] = [];
+    let nc: Coord[] = [];
     for (let j = 0; j < m[i].length; ++j) {
       const c = m[i][j];
       if (isDigit(c)) {
         n += c;
-        nc.push({x: i, y: j});
-      }
-      else if (isSymbol(c)) {
-        symbs.push({x: i, y: j});
+        nc.push({ x: i, y: j });
+      } else if (isSymbol(c)) {
+        symbs.push({ x: i, y: j });
       }
 
       if (!isDigit(c) || j === m[i].length - 1) {
@@ -43,7 +42,7 @@ export function partOne(text: string): number {
           const numb = Number(n);
           nums.push({
             n: numb,
-            coords: nc
+            coords: nc,
           });
           n = "";
           nc = [];
@@ -54,34 +53,33 @@ export function partOne(text: string): number {
 
   // ))))
   let sum = 0;
-  nums.forEach(num => {
+  nums.forEach((num) => {
     let cool = false;
-    num.coords.forEach(c => {
-      symbs.forEach(sym => {
+    num.coords.forEach((c) => {
+      symbs.forEach((sym) => {
         if (isAdjacent(c, sym)) cool = true;
-      })
+      });
     });
     if (cool) sum += num.n;
-  })
+  });
   return sum;
 }
 export function partTwo(text: string): number {
   const m = text.split("\n").map((r) => r.split(""));
 
-  const nums : Num[] = [];
-  const gears : Coord[] = [];
+  const nums: Num[] = [];
+  const gears: Coord[] = [];
 
   for (let i = 0; i < m.length; ++i) {
     let n = "";
-    let nc : Coord[] = [];
+    let nc: Coord[] = [];
     for (let j = 0; j < m[i].length; ++j) {
       const c = m[i][j];
       if (isDigit(c)) {
         n += c;
-        nc.push({x: i, y: j});
-      }
-      else if (isSymbol(c)) {
-        gears.push({x: i, y: j});
+        nc.push({ x: i, y: j });
+      } else if (isSymbol(c)) {
+        gears.push({ x: i, y: j });
       }
 
       if (!isDigit(c) || j === m[i].length - 1) {
@@ -89,7 +87,7 @@ export function partTwo(text: string): number {
           const numb = Number(n);
           nums.push({
             n: numb,
-            coords: nc
+            coords: nc,
           });
           n = "";
           nc = [];
@@ -99,8 +97,8 @@ export function partTwo(text: string): number {
   }
 
   let sum = 0;
-  gears.forEach(gear => {
-    const adj : number[] = [];
+  gears.forEach((gear) => {
+    const adj: number[] = [];
 
     for (const num of nums) {
       for (const co of num.coords) {
@@ -111,6 +109,6 @@ export function partTwo(text: string): number {
       }
     }
     if (adj.length === 2) sum += adj[0] * adj[1];
-  })
+  });
   return sum;
 }

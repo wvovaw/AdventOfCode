@@ -1,7 +1,7 @@
 type Color = "red" | "green" | "blue";
 
 function getGames(input: string) {
-return input.split("\n").map((line) => {
+  return input.split("\n").map((line) => {
     const splitIx = line.indexOf(":") + 2;
     return line.substring(splitIx);
   });
@@ -32,7 +32,7 @@ export function partOne(text: string): number {
   });
 
   const possibleSum = [...Array(games.length).keys()].filter((_, i) => {
-    return !impossibleGames.has(i)
+    return !impossibleGames.has(i);
   }).reduce((acc, cur) => acc + (cur + 1), 0);
   return possibleSum;
 }
@@ -40,12 +40,11 @@ export function partOne(text: string): number {
 export function partTwo(text: string) {
   const games = getGames(text);
 
-
   let sum = 0;
   games.forEach((game, _) => {
     const turnes = game.split(";");
 
-    const gm : Record<Color, number> = {
+    const gm: Record<Color, number> = {
       red: 0,
       green: 0,
       blue: 0,
