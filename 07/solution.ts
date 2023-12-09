@@ -1,6 +1,6 @@
 type CamelCards = { hand: string; bid: number};
 
-function handsComparator(a: CamelCards, b: CamelCards) : 1 | 0 | -1 {
+const handsComparatorP1 = (a: CamelCards, b: CamelCards) => {
   const nominal : Record<string, number> = { A: 14, K: 13, Q: 12, J: 11, T: 10, 9: 9, 8: 8, 7: 7, 6: 6, 5: 5, 4: 4, 3: 3, 2: 2 }
   const coef : Record<string, number> = {
     "5": 7,
@@ -45,10 +45,71 @@ function handsComparator(a: CamelCards, b: CamelCards) : 1 | 0 | -1 {
 
 export function partOne(text: string): number {
   const hands : CamelCards[] = text.split("\n").map(el => el.split(" ")).map(el => ({ hand: el[0], bid: Number(el[1])}));
-  const sorted_hands = hands.sort(handsComparator)
+  const sorted_hands = hands.sort(handsComparatorP1)
 
   return sorted_hands.reduce((p, c, ci) => p + (c.bid * (ci + 1)), 0);
 }
-export function partTwo(text: string): number {
+
+
+function getHandStrengthP2(hand: string) {
+  const conunts : Record<string, number> = {};
+  let jokers = 0;
+  for (const ch of hand.split("")) {
+    if (ch === "J") jokers++;
+    else {
+      if (!conunts[ch]) conunts[ch] = 1;
+      else conunts[ch] += 1;
+    }
+  }
+  const amounts = Object.values(conunts).sort((a, b) => a - b);
+  if (jokers >= 5 || amounts.at(-1)! + jokers >= 5)
+    return 5;
+  if (jokers >= 4 || amounts.at(-1)! + jokers >= 4)
+    return 4;
+
+  if (amounts.at(-1)! + jokers >= 3) {
+    const rem_jokers = amounts.at(-1)! + jokers - 3;
+    if (amounts.length >= 2 && amounts.at(-2)! + rem_jokers >= 2 || rem_jokers >= 2)
+      return 3.5;
+    return 3;
+  }
+
+  if (amounts.at(-1)! + jokers >= 2) {
+    const rem_jokers = amounts.at(-1)! + jokers - 2;
+    if (amounts.length >= 2 && amounts.at(-2)! + rem_jokers >= 2 || rem_jokers >= 2)
+      return 2.5;
+    return 2;
+  }
+
+  return 1;
+}
+
+function handsComparatorP2(a: CamelCards, b: CamelCards) {
+  const nominal : Record<string, number> = { A: 13, K: 12, Q: 11, T: 10, 9: 9, 8: 8, 7: 7, 6: 6, 5: 5, 4: 4, 3: 3, 2: 2, J: 1 }
+
+  const na = a.hand.split("").map(ch => nominal[ch]);
+  const nb = b.hand.split("").map(ch => nominal[ch]);
+  
+  const ka = getHandStrengthP2(a.hand);
+  const kb = getHandStrengthP2(b.hand);
+
+  if (ka === kb) {
+    let i = 0;
+    while (na[i] == nb[i]) ++i;
+    
+    if (na[i] > nb[i]) return 1;
+    if (na[i] < nb[i]) return -1;
+
+    return -1;
+  }
+  if (ka > kb) return 1;
+  if (ka < kb) return -1;
   return 0;
+}
+
+export function partTwo(text: string): number {
+  const hands : CamelCards[] = text.split("\n").map(el => el.split(" ")).map(el => ({ hand: el[0], bid: Number(el[1])}));
+  const sorted_hands = hands.toSorted(handsComparatorP2);
+
+  return sorted_hands.reduce((p, c, ci) => p + (c.bid * (ci + 1)), 0);
 }
