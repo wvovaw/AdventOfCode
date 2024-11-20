@@ -57,9 +57,9 @@ export function partTwo(text: string): string {
 
     if ([x - 1, x, x + 1].includes(crtp)) {
       curFrame = curFrame.concat("#");
-    }
-    else 
+    } else {
       curFrame = curFrame.concat(".");
+    }
   }
   frames.push(curFrame + ".");
   return frames.join("\n");

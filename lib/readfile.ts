@@ -1,4 +1,4 @@
-import { dirname, fromFileUrl, resolve } from "path";
+import { dirname, fromFileUrl, resolve } from "@std/path";
 
 export default function (from: string, filename: string) {
   const filePath = resolve(dirname(fromFileUrl(from)), filename);

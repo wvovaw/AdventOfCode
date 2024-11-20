@@ -1,4 +1,4 @@
-import { assertEquals } from "assert";
+import { assertEquals } from "@std/assert";
 import { countScenicScore, Matrix, partOne, partTwo } from "./solution.ts";
 import readfile from "../lib/readfile.ts";
 

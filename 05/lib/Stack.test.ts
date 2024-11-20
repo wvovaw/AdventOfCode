@@ -1,4 +1,4 @@
-import { assertEquals } from "assert";
+import { assertEquals } from "@std/assert";
 import Stack from "./Stack.ts";
 
 Deno.test("Stack class", async (t) => {
