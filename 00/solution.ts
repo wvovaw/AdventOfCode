@@ -23,3 +23,23 @@ export function partOne(text: string): number {
 
   return res
 }
+
+export function partTwo(text: string): number {
+  const lines = text.split('\n')
+  const [list1, list2] = getTwoList(lines)
+
+  let res = 0
+  for (let i = 0; i < list1.length; ++i) {
+    const num = list1[i]
+    let counter = 0
+
+    for (const right of list2) {
+      if (right === list1[i]) {
+        counter++
+      }
+    }
+
+    res += num * counter
+  }
+  return res
+}
