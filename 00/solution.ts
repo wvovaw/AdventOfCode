@@ -1,6 +1,25 @@
-export function partOne(text: string): number {
-  return text.length;
+function getTwoList(lines: string[]): [number[], number[]] {
+  const lists: [number[], number[]] = [[], []]
+  for (const line of lines) {
+    const pair = line.split(/\s+/)
+    lists[0].push(Number(pair[0]))
+    lists[1].push(Number(pair[1]))
+  }
+
+  return lists
 }
-export function partTwo(text: string): number {
-  return 0;
+
+export function partOne(text: string): number {
+  const lines = text.split('\n')
+
+  const [list1, list2] = getTwoList(lines)
+  list1.sort()
+  list2.sort()
+
+  let res = 0
+  for (let i = 0; i < list1.length; ++i) {
+    res += Math.abs(list1[i] - list2[i])
+  }
+
+  return res
 }
