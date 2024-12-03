@@ -3,6 +3,8 @@
 | Day | Part 1 | Part 2 |
 | --: | :----: | :----: |
 |   1 |   ⭐   |   ⭐   |
+|   2 |   ⭐   |   ⭐   |
+|   3 |   ⭐   |   ⭐   |
 
 [![Static Badge](https://img.shields.io/badge/2023-fff?style=flat-square&logo=adventofcode&logoColor=ffff66&label=AoC&labelColor=0f0f23&color=be264c)](https://github.com/wvovaw/AdventOfCode/tree/2023)
 
