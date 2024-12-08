@@ -86,3 +86,29 @@ export function partOne(text: string): number {
 
   return counter
 }
+
+export function partTwo(text: string): number {
+  const m = text.split('\n').map((row) => row.split(''))
+
+  const MAX_ROWS = m.length
+  const MAX_COLS = Math.max(...m.map((r) => r.length))
+
+  let counter = 0
+
+  for (let i = 0; i < MAX_ROWS; ++i) {
+    for (let j = 0; j < MAX_COLS; ++j) {
+      if (m[i][j] === 'A' && m[i - 1] && m[i + 1]) {
+        if (
+          ((m[i - 1][j - 1] === 'M' && m[i + 1][j + 1] === 'S') ||
+            (m[i - 1][j - 1] === 'S' && m[i + 1][j + 1] === 'M')) &&
+          ((m[i + 1][j - 1] === 'M' && m[i - 1][j + 1] === 'S') ||
+            (m[i + 1][j - 1] === 'S' && m[i - 1][j + 1] === 'M'))
+        ) {
+          counter++
+        }
+      }
+    }
+  }
+
+  return counter
+}
