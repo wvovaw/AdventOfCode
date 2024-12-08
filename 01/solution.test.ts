@@ -2,7 +2,7 @@ import { assertEquals } from '@std/assert'
 import { partOne, partTwo } from './solution.ts'
 import { readfile } from '../lib/textfiels.ts'
 
-Deno.test('Puzzle 0', async (t) => {
+Deno.test('Puzzle 1', async (t) => {
   const txt = readfile(import.meta.url, 'test.txt')
 
   await t.step('Part one', () => {
