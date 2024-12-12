@@ -9,6 +9,6 @@ Deno.test('Puzzle 7', async (t) => {
   })
   await t.step('Part Two', () => {
     const txt = readfile(import.meta.url, 'test.txt')
-    assertEquals(partTwo(txt), 0)
+    assertEquals(partTwo(txt), 34)
   })
 })
